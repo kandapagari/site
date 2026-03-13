@@ -39,6 +39,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var applied = theme === 'dark' || (!theme && dark);
+                  document.documentElement.setAttribute('data-theme', applied ? 'dark' : 'light');
+                  document.body.style.backgroundColor = applied ? '#020617' : '#ffffff';
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>
           <Navigation />
