@@ -55,6 +55,17 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* SEO Meta Tags */}
+        <meta property="og:title" content="Pavan Kumar Kandapagari — Foundation Models & Robotics" />
+        <meta property="og:description" content="Team Lead for Foundation Models at Agile Robots SE. Specializing in Vision-Language-Action models, imitation learning, and distributed training for intelligent robotic agents." />
+        <meta property="og:image" content="/icon.svg" />
+        <meta property="og:url" content="https://kandapagari.vercel.app" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Pavan Kumar Kandapagari — Foundation Models & Robotics" />
+        <meta name="twitter:description" content="Team Lead for Foundation Models at Agile Robots SE. Specializing in Vision-Language-Action models, imitation learning, and distributed training for intelligent robotic agents." />
+        <meta name="twitter:image" content="/icon.svg" />
+        <meta name="twitter:site" content="@kandapagari" />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>

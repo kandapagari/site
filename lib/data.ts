@@ -52,6 +52,9 @@ export interface Education {
 export const socialLinks = {
   github: "https://github.com/kandapagari",
   linkedin: "https://www.linkedin.com/in/kandapagari/",
+  x: "https://x.com/kandapagari",
+  instagram: "https://instagram.com/abhimanyu_pavan",
+  youtube: "https://www.youtube.com/@kandapagari",
   twitter: "https://twitter.com/zephyr_347",
   email: "mailto:785pavan@gmail.com",
   email2: "mailto:pavan.kandapagari@gmail.com",

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail, Youtube, Instagram, Twitter } from 'lucide-react';
 import { socialLinks } from '@/lib/data';
 import GoogleScholarIcon from '@/components/ui/GoogleScholarIcon';
 
@@ -57,51 +57,15 @@ export default function Footer() {
               Connect
             </h4>
             <div className="flex gap-3">
-              <a
-                href={socialLinks.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg"
-                aria-label="GitHub"
-              >
-                <Github size={18} />
-              </a>
-              <a
-                href={socialLinks.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={18} />
-              </a>
-              <a
-                href={socialLinks.email}
-                className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg"
-                aria-label="Email"
-              >
-                <Mail size={18} />
-              </a>
-              <a
-                href="mailto:pavan.kandapagari@gmail.com"
-                className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg"
-                aria-label="Email"
-              >
-                <Mail size={18} />
-              </a>
-              <a
-                href={socialLinks.scholar}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg"
-                aria-label="Google Scholar"
-              >
-                <GoogleScholarIcon size={18} />
-              </a>
+              <a href={socialLinks.github} target="_blank" rel="noopener noreferrer" className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg" aria-label="GitHub"><Github size={18} /></a>
+              <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg" aria-label="LinkedIn"><Linkedin size={18} /></a>
+              <a href={socialLinks.x} target="_blank" rel="noopener noreferrer" className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg" aria-label="X"><Twitter size={18} /></a>
+              <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg" aria-label="Instagram"><Instagram size={18} /></a>
+              <a href={socialLinks.youtube} target="_blank" rel="noopener noreferrer" className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg" aria-label="YouTube"><Youtube size={18} /></a>
             </div>
             <p className="mt-3 text-xs text-foreground-secondary">
-              pavan.kandapagari@gmail.com<br />
-              785pavan@gmail.com<br />
+              <a href="mailto:pavan.kandapagari@gmail.com" className="hover:text-accent transition-colors">pavan.kandapagari@gmail.com</a><br />
+              <a href="mailto:785pavan@gmail.com" className="hover:text-accent transition-colors">785pavan@gmail.com</a><br />
             </p>
           </div>
         </div>
