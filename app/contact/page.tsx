@@ -17,10 +17,22 @@ const contacts = [
     href: 'mailto:785pavan@gmail.com',
   },
   {
+    icon: Mail,
+    label: 'Email',
+    value: 'pavan.kandapagari@gmail.com',
+    href: 'mailto:pavan.kandapagari@gmail.com',
+  },
+  {
     icon: Phone,
     label: 'Phone',
     value: '+49 157 39467478',
     href: 'tel:+4915739467478',
+  },
+  {
+    icon: Phone,
+    label: 'Phone',
+    value: '+91 8885724125',
+    href: 'tel:+918885724125',
   },
   {
     icon: Github,
@@ -56,7 +68,7 @@ export default function ContactPage() {
         {contacts.map((contact, i) => {
           const Icon = contact.icon;
           return (
-            <AnimateOnScroll key={contact.label} animation="fade-up" delay={i * 80}>
+            <AnimateOnScroll key={contact.label + contact.value} animation="fade-up" delay={i * 80}>
               <a
                 href={contact.href}
                 target={contact.href.startsWith('mailto') || contact.href.startsWith('tel') ? undefined : '_blank'}

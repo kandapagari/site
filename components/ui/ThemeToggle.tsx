@@ -1,46 +1,70 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Sun, Moon } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { Sun, Moon, Monitor } from "lucide-react";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const stored = localStorage.getItem('theme');
-    if (stored === 'dark' || stored === 'light') {
+    const stored = localStorage.getItem("theme");
+    if (stored === "dark" || stored === "light") {
       setTheme(stored);
-      document.documentElement.setAttribute('data-theme', stored);
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.setAttribute("data-theme", stored);
+    } else {
+      setTheme("system");
+      document.documentElement.setAttribute(
+        "data-theme",
+        window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+      );
     }
   }, []);
 
-  const toggleTheme = () => {
-    const next = theme === 'light' ? 'dark' : 'light';
-    setTheme(next);
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+  const cycleTheme = () => {
+    if (theme === "system") {
+      setTheme("light");
+      document.documentElement.setAttribute("data-theme", "light");
+      localStorage.setItem("theme", "light");
+    } else if (theme === "light") {
+      setTheme("dark");
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      setTheme("system");
+      localStorage.removeItem("theme");
+      document.documentElement.setAttribute(
+        "data-theme",
+        window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+      );
+    }
   };
 
   if (!mounted) {
     return <div className="w-9 h-9" />;
   }
 
+  let Icon;
+  let label;
+  if (theme === "light") {
+    Icon = <Sun size={18} className="text-foreground-secondary" />;
+    label = "Switch to dark mode";
+  } else if (theme === "dark") {
+    Icon = <Moon size={18} className="text-foreground-secondary" />;
+    label = "Switch to system mode";
+  } else {
+    Icon = <Monitor size={18} className="text-foreground-secondary" />;
+    label = "Switch to light mode";
+  }
+
   return (
     <button
-      onClick={toggleTheme}
+      onClick={cycleTheme}
       className="p-2 rounded-lg transition-colors hover:bg-card-bg-hover"
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      aria-label={label}
     >
-      {theme === 'light' ? (
-        <Moon size={18} className="text-foreground-secondary" />
-      ) : (
-        <Sun size={18} className="text-foreground-secondary" />
-      )}
+      {Icon}
     </button>
   );
 }

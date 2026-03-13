@@ -54,6 +54,9 @@ export const socialLinks = {
   linkedin: "https://www.linkedin.com/in/kandapagari/",
   twitter: "https://twitter.com/zephyr_347",
   email: "mailto:785pavan@gmail.com",
+  email2: "mailto:pavan.kandapagari@gmail.com",
+  phone: "tel:+4915739467478",
+  phone2: "tel:+918885724125",
   scholar: "https://scholar.google.de/citations?hl=en&user=EkSY9wUAAAAJ",
 };
 
@@ -86,10 +89,13 @@ export const about = {
     "Python Programming — GUVI / IIT Madras",
   ],
   languages: [
+    { name: "Parseltongue", level: "Mastery" },
     { name: "Telugu", level: "Native" },
     { name: "Tamil", level: "Native" },
     { name: "English", level: "Professional" },
     { name: "German", level: "Elementary (A2)" },
+    { name: "Hindi", level: "Barely" },
+    { name: "Kannada", level: "Barely" },
   ],
 };
 

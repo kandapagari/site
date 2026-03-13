@@ -83,6 +83,13 @@ export default function Footer() {
                 <Mail size={18} />
               </a>
               <a
+                href="mailto:pavan.kandapagari@gmail.com"
+                className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg"
+                aria-label="Email"
+              >
+                <Mail size={18} />
+              </a>
+              <a
                 href={socialLinks.scholar}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -93,7 +100,8 @@ export default function Footer() {
               </a>
             </div>
             <p className="mt-3 text-xs text-foreground-secondary">
-              785pavan@gmail.com
+              pavan.kandapagari@gmail.com<br />
+              785pavan@gmail.com<br />
             </p>
           </div>
         </div>

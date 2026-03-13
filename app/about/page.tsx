@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { about, education, skills } from '@/lib/data';
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 import SkillTag from '@/components/ui/SkillTag';
+import { FaPython } from 'react-icons/fa';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -116,7 +117,14 @@ export default function AboutPage() {
         {about.languages.map((lang, i) => (
           <AnimateOnScroll key={lang.name} animation="fade-up" delay={i * 50}>
             <div className="rounded-lg border border-border bg-card-bg p-4 text-center">
-              <p className="text-sm font-semibold text-foreground">{lang.name}</p>
+              <p className="text-sm font-semibold text-foreground">
+                {lang.name === "Parseltongue" ? (
+                  <span className="inline-flex items-center gap-1">
+                    <FaPython style={{ width: 20, height: 20, display: 'inline-block', verticalAlign: 'middle', color: 'currentColor', filter: 'grayscale(100%)' }} />
+                    Parseltongue
+                  </span>
+                ) : lang.name}
+              </p>
               <p className="mt-1 text-xs text-foreground-secondary">{lang.level}</p>
             </div>
           </AnimateOnScroll>
