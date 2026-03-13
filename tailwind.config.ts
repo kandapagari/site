@@ -2,76 +2,63 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
-      backgroundColor: {
-        'primary-dark': '#0a0a0e',
-        'primary-light': '#1a1a24',
-      },
       colors: {
-        primary: {
-          dark: '#0a0a0e',
-          light: '#1a1a24',
-        },
-        accent: {
-          blue: '#6366f1',
-          purple: '#8b5cf6',
-          cyan: '#06b6d4',
-        },
-        text: {
-          primary: '#e2e8f0',
-          secondary: '#64748b',
-          muted: '#94a3b8',
-        },
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        "foreground-secondary": "var(--foreground-secondary)",
+        accent: "var(--accent)",
+        "accent-hover": "var(--accent-hover)",
+        border: "var(--border)",
+        "card-bg": "var(--card-bg)",
+        "card-bg-hover": "var(--card-bg-hover)",
+        "nav-bg": "var(--nav-bg)",
       },
-      backgroundImage: {
-        'gradient-x': 'linear-gradient(to right, #6366f1, #8b5cf6, #06b6d4, #6366f1)',
-        'gradient-y': 'linear-gradient(to bottom, #6366f1, #8b5cf6, #06b6d4, #6366f1)',
-        'gradient-bg': 'linear-gradient(135deg, #0a0a0e 0%, #1a1a24 50%, #0a0a0e 100%)',
+      fontFamily: {
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       animation: {
-        'gradient-x': 'gradient-x 8s ease infinite',
-        'gradient-y': 'gradient-y 8s ease infinite',
-        'float': 'float 6s ease-in-out infinite',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        "fade-up": "fadeUp 0.6s ease-out both",
+        "slide-left": "slideLeft 0.6s ease-out both",
+        "slide-right": "slideRight 0.6s ease-out both",
+        "blur-in": "blurIn 0.8s ease-out both",
+        "line-draw": "lineDraw 0.8s ease-out both",
+        "count-up": "countUp 1s ease-out both",
       },
       keyframes: {
-        'gradient-x': {
-          '0%, 100%': {
-            'background-size': '200% 200%',
-            'background-position': 'left center'
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center'
-          },
+        fadeUp: {
+          "0%": { opacity: "0", transform: "translateY(24px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        'gradient-y': {
-          '0%, 100%': {
-            'background-size': '200% 200%',
-            'background-position': 'top center'
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'bottom center'
-          },
+        slideLeft: {
+          "0%": { opacity: "0", transform: "translateX(-40px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
         },
-        'float': {
-          '0%, 100%': {
-            transform: 'translateY(0)',
-          },
-          '50%': {
-            transform: 'translateY(-20px)',
-          },
+        slideRight: {
+          "0%": { opacity: "0", transform: "translateX(40px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        blurIn: {
+          "0%": { opacity: "0", filter: "blur(8px)" },
+          "100%": { opacity: "1", filter: "blur(0)" },
+        },
+        lineDraw: {
+          "0%": { width: "0%" },
+          "100%": { width: "100%" },
+        },
+        countUp: {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
       },
     },
   },
   plugins: [],
-}
+};
 
-export default config
+export default config;

@@ -3,16 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0e;
-  --foreground: #e2e8f0;
+  --background: #ffffff;
+  --foreground: #111827;
+  --foreground-secondary: #4b5563;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --border: #e5e7eb;
+  --card-bg: #f9fafb;
+  --card-bg-hover: #f3f4f6;
+  --nav-bg: rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="dark"] {
+  --background: #020617;
+  --foreground: #f1f5f9;
+  --foreground-secondary: #94a3b8;
+  --accent: #818cf8;
+  --accent-hover: #6366f1;
+  --border: #334155;
+  --card-bg: #0f172a;
+  --card-bg-hover: #1e293b;
+  --nav-bg: rgba(2, 6, 23, 0.85);
 }
 
 @layer base {
-  body {
-    @apply bg-primary-dark text-text-primary;
-  }
   html {
     @apply scroll-smooth;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -20,12 +41,30 @@
   .text-balance {
     text-wrap: balance;
   }
-  
-  .gradient-text {
-    @apply bg-gradient-to-r from-accent-blue via-accent-purple to-accent-cyan bg-clip-text text-transparent;
+}
+
+/* Animation utilities - respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  
-  .glass-effect {
-    @apply backdrop-blur-lg bg-white/5 border border-white/10;
-  }
+}
+
+/*
+ * Animate on scroll system.
+ * .aos-init hides elements before hydration AND during the delay.
+ * Animation keyframes use fill-mode:both so elements stay at 0% during delay
+ * and at 100% after completing.
+ */
+.aos-init {
+  opacity: 0;
+}
+
+/* For reduced motion users, show content immediately */
+.aos-reduced {
+  opacity: 1;
 }

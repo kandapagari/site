@@ -1,76 +1,126 @@
-import type { Metadata } from "next";
-import { GraduationCap, Briefcase, MapPin } from "lucide-react";
-import GlassCard from "@/components/ui/GlassCard";
-import { aboutText } from "@/lib/data";
+import type { Metadata } from 'next';
+import { about, education, skills } from '@/lib/data';
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
+import SkillTag from '@/components/ui/SkillTag';
 
 export const metadata: Metadata = {
-  title: "About - Pavan Kumar Kandapagari",
-  description: aboutText.intro,
+  title: 'About',
 };
 
 export default function AboutPage() {
+  const skillCategories = [...new Set(skills.map((s) => s.category))];
+
   return (
-    <div className="min-h-screen bg-primary-dark">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h1 className="text-4xl md:text-5xl font-bold gradient-text mb-4">
-          About Me
-        </h1>
-        <p className="text-text-secondary text-lg mb-12 max-w-2xl">
-          {aboutText.intro}
-        </p>
+    <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+      {/* About Me */}
+      <AnimateOnScroll animation="fade-up">
+        <h1 className="mb-8 text-3xl font-bold text-foreground">About Me</h1>
+      </AnimateOnScroll>
 
-        {/* Bio */}
-        <GlassCard className="mb-8 hover:scale-100">
-          <div className="flex items-start gap-4">
-            <div className="p-3 rounded-lg bg-accent-blue/10 border border-accent-blue/30">
-              <Briefcase className="w-6 h-6 text-accent-blue" />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-white mb-3">
-                Professional Summary
-              </h2>
-              <p className="text-text-secondary leading-relaxed">
-                {aboutText.bio}
-              </p>
-            </div>
+      {about.aboutParagraphs.map((paragraph, i) => (
+        <AnimateOnScroll key={i} animation="fade-up" delay={(i + 1) * 100}>
+          <p className="mb-6 text-lg leading-relaxed text-foreground-secondary">
+            {paragraph}
+          </p>
+        </AnimateOnScroll>
+      ))}
+
+      {/* Focus Areas */}
+      <AnimateOnScroll animation="fade-up" delay={500}>
+        <div className="mb-12 mt-8 rounded-lg border border-border bg-card-bg p-6">
+          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground-secondary">
+            Focus Areas
+          </h2>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {about.focusAreas.map((area, i) => (
+              <div key={area} className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                <span className="text-base font-medium text-foreground">{area}</span>
+              </div>
+            ))}
           </div>
-        </GlassCard>
-
-        {/* Location */}
-        <GlassCard className="mb-8 hover:scale-100">
-          <div className="flex items-start gap-4">
-            <div className="p-3 rounded-lg bg-accent-purple/10 border border-accent-purple/30">
-              <MapPin className="w-6 h-6 text-accent-purple" />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-white mb-2">Based In</h2>
-              <p className="text-text-secondary">Munich, Germany</p>
-            </div>
-          </div>
-        </GlassCard>
-
-        {/* Education */}
-        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-          <GraduationCap className="w-7 h-7 text-accent-cyan" />
-          Education
-        </h2>
-
-        <div className="space-y-4">
-          {aboutText.education.map((edu, i) => (
-            <GlassCard key={i} className="hover:scale-100">
-              <h3 className="text-lg font-bold text-white">{edu.degree}</h3>
-              <p className="text-accent-cyan text-sm mt-1">
-                {edu.institution}
-              </p>
-              {edu.focus && (
-                <p className="text-text-secondary text-sm mt-2">
-                  Focus: {edu.focus}
-                </p>
-              )}
-              <p className="text-text-muted text-sm mt-1">{edu.grade}</p>
-            </GlassCard>
-          ))}
         </div>
+      </AnimateOnScroll>
+
+      {/* Background */}
+      <AnimateOnScroll animation="fade-up" delay={600}>
+        <h2 className="mb-4 text-2xl font-bold text-foreground">Background</h2>
+        <p className="mb-12 leading-relaxed text-foreground-secondary">
+          {about.bio}
+        </p>
+      </AnimateOnScroll>
+
+      {/* Education */}
+      <AnimateOnScroll animation="fade-up">
+        <h2 className="mb-6 text-2xl font-bold text-foreground">Education</h2>
+      </AnimateOnScroll>
+      <div className="mb-12 space-y-4">
+        {education.map((edu, i) => (
+          <AnimateOnScroll key={edu.degree} animation="slide-right" delay={i * 100}>
+            <div className="rounded-lg border border-border bg-card-bg p-5">
+              <h3 className="text-base font-semibold text-foreground">{edu.degree}</h3>
+              <p className="mt-1 text-sm font-medium text-accent">{edu.institution}</p>
+              <p className="mt-1 text-xs text-foreground-secondary">
+                {edu.dates} &middot; {edu.location}
+              </p>
+              {edu.details && (
+                <p className="mt-2 text-sm text-foreground-secondary">{edu.details}</p>
+              )}
+            </div>
+          </AnimateOnScroll>
+        ))}
+      </div>
+
+      {/* Skills */}
+      <AnimateOnScroll animation="fade-up">
+        <h2 className="mb-6 text-2xl font-bold text-foreground">Skills</h2>
+      </AnimateOnScroll>
+      <div className="mb-12 space-y-6">
+        {skillCategories.map((category, ci) => (
+          <AnimateOnScroll key={category} animation="fade-up" delay={ci * 100}>
+            <div>
+              <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-foreground-secondary">
+                {category}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {skills
+                  .filter((s) => s.category === category)
+                  .map((skill) => (
+                    <SkillTag key={skill.name} skill={skill} />
+                  ))}
+              </div>
+            </div>
+          </AnimateOnScroll>
+        ))}
+      </div>
+
+      {/* Certifications */}
+      <AnimateOnScroll animation="fade-up">
+        <h2 className="mb-6 text-2xl font-bold text-foreground">Certifications</h2>
+      </AnimateOnScroll>
+      <div className="mb-12 space-y-2">
+        {about.certifications.map((cert, i) => (
+          <AnimateOnScroll key={cert} animation="fade-up" delay={i * 50}>
+            <div className="rounded-lg border border-border bg-card-bg px-4 py-3">
+              <p className="text-sm text-foreground">{cert}</p>
+            </div>
+          </AnimateOnScroll>
+        ))}
+      </div>
+
+      {/* Languages */}
+      <AnimateOnScroll animation="fade-up">
+        <h2 className="mb-6 text-2xl font-bold text-foreground">Languages</h2>
+      </AnimateOnScroll>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {about.languages.map((lang, i) => (
+          <AnimateOnScroll key={lang.name} animation="fade-up" delay={i * 50}>
+            <div className="rounded-lg border border-border bg-card-bg p-4 text-center">
+              <p className="text-sm font-semibold text-foreground">{lang.name}</p>
+              <p className="mt-1 text-xs text-foreground-secondary">{lang.level}</p>
+            </div>
+          </AnimateOnScroll>
+        ))}
       </div>
     </div>
   );

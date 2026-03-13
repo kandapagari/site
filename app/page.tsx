@@ -1,146 +1,235 @@
-import Link from "next/link";
-import { ArrowRight, Github, Linkedin, Twitter, Mail } from "lucide-react";
-import GlassCard from "@/components/ui/GlassCard";
+import Link from 'next/link';
+import { ArrowRight, Download, Github, Linkedin, Mail } from 'lucide-react';
+import { about, experiences, projects, skills, publications, stats, socialLinks } from '@/lib/data';
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
+import Counter from '@/components/ui/Counter';
+import SectionPreview from '@/components/ui/SectionPreview';
+import ProjectCard from '@/components/ui/ProjectCard';
+import SkillTag from '@/components/ui/SkillTag';
+import GoogleScholarIcon from '@/components/ui/GoogleScholarIcon';
 
 export default function Home() {
-  const heroSkills = [
-    "VLA Models",
-    "Imitation Learning",
-    "Foundation Models",
-    "Distributed Training",
-    "Computer Vision",
-    "MLOps & Edge AI",
-  ];
-
-  const contactSocials = [
-    { icon: Github, href: "https://github.com/kandapagari", label: "GitHub" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/kandapagari/", label: "LinkedIn" },
-    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-    { icon: Mail, href: "mailto:785pavan@gmail.com", label: "Email" },
-  ];
+  const featuredProjects = projects.filter((p) => p.featured);
+  const recentExperiences = experiences.slice(0, 3);
+  const skillCategories = [...new Set(skills.map((s) => s.category))];
 
   return (
-    <>
-      <div className="min-h-screen gradient-bg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <p className="text-accent-cyan text-lg">
-                Hello there, I&apos;m
-              </p>
-
-              <h1 className="text-5xl md:text-7xl font-bold gradient-text">
-                Pavan Kumar
-              </h1>
-
-              <h2 className="text-2xl md:text-3xl text-text-secondary">
-                Kandapagari
-              </h2>
-
-              <p className="text-accent-cyan text-sm font-medium tracking-wider uppercase">
-                Tech Lead | Foundation Models &amp; Embodied AI
-              </p>
-
-              <p className="text-xl text-text-secondary max-w-xl">
-                R&amp;D Tech Lead specializing in Vision-Language-Action (VLA) models and
-                Imitation Learning for autonomous agents. Bridging research innovation and
-                production at scale.
-              </p>
-
-              <div className="flex flex-wrap gap-4 pt-4">
-                <Link
-                  href="/projects"
-                  className="px-8 py-4 bg-gradient-to-r from-accent-blue to-accent-purple rounded-lg text-white font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      {/* Hero */}
+      <section className="pb-16 pt-20 md:pt-28">
+        <AnimateOnScroll animation="fade-up">
+          <p className="mb-4 text-sm font-medium tracking-wider text-accent uppercase">
+            {about.role} @ {about.company}
+          </p>
+        </AnimateOnScroll>
+        <AnimateOnScroll animation="fade-up" delay={100}>
+          <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
+            {about.headline}
+          </h1>
+        </AnimateOnScroll>
+        <AnimateOnScroll animation="fade-up" delay={200}>
+          <p className="mb-8 max-w-2xl text-lg leading-relaxed text-foreground-secondary">
+            {about.intro}
+          </p>
+        </AnimateOnScroll>
+        <AnimateOnScroll animation="fade-up" delay={300}>
+          <div className="mb-8 flex flex-wrap gap-3">
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-hover"
+            >
+              View Projects
+              <ArrowRight size={16} />
+            </Link>
+            <a
+              href="/resume.pdf"
+              download
+              className="inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-card-bg"
+            >
+              Download CV
+              <Download size={16} />
+            </a>
+          </div>
+        </AnimateOnScroll>
+        <AnimateOnScroll animation="fade-up" delay={400}>
+          <div className="flex gap-3">
+            {[
+              { icon: Github, href: socialLinks.github, label: 'GitHub' },
+              { icon: Linkedin, href: socialLinks.linkedin, label: 'LinkedIn' },
+              { icon: Mail, href: socialLinks.email, label: 'Email' },
+            ].map((s) => {
+              const Icon = s.icon;
+              return (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target={s.href.startsWith('mailto') ? undefined : '_blank'}
+                  rel={s.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+                  className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg"
+                  aria-label={s.label}
                 >
-                  View Projects
-                  <ArrowRight size={20} />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="px-8 py-4 glass-effect rounded-lg text-white font-semibold hover:bg-white/10 transition-colors"
-                >
-                  Get in Touch
-                </Link>
-              </div>
-            </div>
+                  <Icon size={18} />
+                </a>
+              );
+            })}
+            <a
+              href={socialLinks.scholar}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md p-2 text-foreground-secondary transition-colors hover:text-accent hover:bg-card-bg"
+              aria-label="Google Scholar"
+            >
+              <GoogleScholarIcon size={18} />
+            </a>
+          </div>
+        </AnimateOnScroll>
+      </section>
 
-            <div className="relative">
-              <GlassCard className="p-8">
-                <div className="relative aspect-square bg-gradient-to-br from-accent-blue/20 to-accent-purple/20 rounded-xl overflow-hidden border border-accent-blue/30 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-6xl font-bold gradient-text">PK</div>
-                    <p className="text-text-secondary text-sm mt-2">
-                      Tech Lead &amp; AI Researcher
-                    </p>
-                  </div>
+      {/* Stats */}
+      <section className="border-y border-border py-10">
+        <div className="grid grid-cols-3 gap-8 text-center">
+          {stats.map((stat, i) => (
+            <AnimateOnScroll key={stat.label} animation="slide-left" delay={i * 150}>
+              <div>
+                <div className="text-3xl font-bold text-foreground md:text-4xl">
+                  <Counter target={stat.value} suffix="+" />
                 </div>
-              </GlassCard>
-            </div>
-          </div>
-
-          <div className="mt-20">
-            <div className="glass-effect rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-6 text-center">
-                What I Work On
-              </h3>
-              <div className="grid md:grid-cols-3 gap-6">
-                {heroSkills.map((skill, index) => (
-                  <MotionCard
-                    key={skill}
-                    index={index}
-                    skill={skill}
-                  />
-                ))}
+                <p className="mt-1 text-sm text-foreground-secondary">{stat.label}</p>
               </div>
-            </div>
-          </div>
-
-          <div className="mt-12 text-center">
-            <p className="text-text-secondary mb-8">
-              Let&apos;s connect and build something amazing together
-            </p>
-            <div className="flex justify-center gap-6">
-              {contactSocials.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    className="glass-effect p-4 rounded-lg hover:bg-white/10 transition-colors group"
-                    aria-label={social.label}
-                  >
-                    <Icon className="w-6 h-6 text-text-secondary group-hover:text-white transition-colors" />
-                  </a>
-                );
-              })}
-            </div>
-          </div>
+            </AnimateOnScroll>
+          ))}
         </div>
-      </div>
-    </>
-  );
-}
+      </section>
 
-function MotionCard({ skill, index }: { skill: string; index: number }) {
-  const colorSchemes = [
-    "from-blue-500/20 to-cyan-500/20 border-blue-500/30",
-    "from-purple-500/20 to-pink-500/20 border-purple-500/30",
-    "from-orange-500/20 to-yellow-500/20 border-orange-500/30",
-  ];
+      {/* Experience Preview */}
+      <SectionPreview title="Experience" href="/experience">
+        <div className="space-y-4">
+          {recentExperiences.map((exp, i) => (
+            <AnimateOnScroll
+              key={exp.id}
+              animation={i % 2 === 0 ? 'slide-left' : 'slide-right'}
+              delay={i * 100}
+            >
+              <div className="rounded-lg border border-border bg-card-bg p-5">
+                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <h3 className="text-base font-semibold text-foreground">{exp.role}</h3>
+                  <span className="text-sm font-medium text-accent">{exp.company}</span>
+                </div>
+                <p className="mt-1 text-xs text-foreground-secondary">
+                  {exp.startDate} — {exp.endDate}
+                </p>
+              </div>
+            </AnimateOnScroll>
+          ))}
+        </div>
+      </SectionPreview>
 
-  return (
-    <div
-      className={`bg-gradient-to-br ${colorSchemes[index % 3]} rounded-xl p-6 border ${colorSchemes[index % 3].split(" ")[2]} hover:scale-105 transition-transform`}
-    >
-      <h4 className="text-lg font-semibold text-white">{skill}</h4>
-      <p className="text-text-secondary mt-2">
-        {skill === "VLA Models" && "Vision-Language-Action architectures for zero-shot robotic generalization"}
-        {skill === "Imitation Learning" && "Transformer policies enabling few-shot task generalization"}
-        {skill === "Foundation Models" && "Pre-training large-scale models on 75TB+ multimodal datasets"}
-        {skill === "Distributed Training" && "AWS HyperPod clusters with >85% GPU utilization"}
-        {skill === "Computer Vision" && "Real-time detection and tracking at 45 FPS on edge hardware"}
-        {skill === "MLOps & Edge AI" && "TensorRT/ONNX optimization with 3-5x inference speedups"}
-      </p>
+      {/* Featured Projects */}
+      <SectionPreview title="Projects" href="/projects">
+        <div className="grid gap-4 sm:grid-cols-2">
+          {featuredProjects.map((project, i) => (
+            <AnimateOnScroll
+              key={project.slug}
+              animation={i % 2 === 0 ? 'slide-left' : 'slide-right'}
+              delay={i * 100}
+            >
+              <ProjectCard project={project} />
+            </AnimateOnScroll>
+          ))}
+        </div>
+      </SectionPreview>
+
+      {/* Skills Snapshot */}
+      <SectionPreview title="Skills" href="/about">
+        <div className="space-y-6">
+          {skillCategories.map((category, ci) => (
+            <AnimateOnScroll key={category} animation="fade-up" delay={ci * 100}>
+              <div>
+                <h3 className="mb-3 text-sm font-semibold text-foreground-secondary uppercase tracking-wider">
+                  {category}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {skills
+                    .filter((s) => s.category === category)
+                    .map((skill) => (
+                      <SkillTag key={skill.name} skill={skill} />
+                    ))}
+                </div>
+              </div>
+            </AnimateOnScroll>
+          ))}
+        </div>
+      </SectionPreview>
+
+      {/* Publications */}
+      <section className="py-16">
+        <AnimateOnScroll animation="blur-in">
+          <h2 className="mb-8 text-2xl font-bold text-foreground">Publications & Patents</h2>
+        </AnimateOnScroll>
+        <div className="space-y-4">
+          {publications.map((pub, i) => (
+            <AnimateOnScroll key={pub.id} animation="blur-in" delay={i * 150}>
+              <div className="rounded-lg border border-border bg-card-bg p-5">
+                <div className="mb-1 flex items-center gap-2">
+                  <span className="rounded bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent uppercase">
+                    {pub.type}
+                  </span>
+                  <span className="text-xs text-foreground-secondary">{pub.year}</span>
+                </div>
+                <h3 className="text-base font-semibold text-foreground">{pub.title}</h3>
+                <p className="mt-1 text-sm text-foreground-secondary">
+                  {pub.authors.join(', ')}
+                </p>
+                <p className="mt-1 text-xs text-foreground-secondary">{pub.venue}</p>
+                {pub.citations && (
+                  <p className="mt-2 text-xs text-foreground-secondary">
+                    {pub.citations} citations
+                  </p>
+                )}
+              </div>
+            </AnimateOnScroll>
+          ))}
+        </div>
+        <div className="mt-4">
+          <Link
+            href="/publications"
+            className="inline-flex items-center gap-1 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+          >
+            View all publications
+            <ArrowRight size={14} />
+          </Link>
+        </div>
+      </section>
+
+      {/* Contact CTA */}
+      <section className="border-t border-border py-16">
+        <AnimateOnScroll animation="blur-in">
+          <div className="text-center">
+            <h2 className="mb-4 text-2xl font-bold text-foreground">Let&apos;s connect</h2>
+            <p className="mb-6 text-foreground-secondary">
+              Interested in collaborating on ML, robotics, or foundation models? Reach out.
+            </p>
+            <div className="flex justify-center gap-3">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-hover"
+              >
+                Get in Touch
+                <Mail size={16} />
+              </Link>
+              <a
+                href={socialLinks.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-card-bg"
+              >
+                LinkedIn
+                <Linkedin size={16} />
+              </a>
+            </div>
+          </div>
+        </AnimateOnScroll>
+      </section>
     </div>
   );
 }

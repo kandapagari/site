@@ -1,60 +1,47 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import type { Metadata } from "next";
-import ProjectCard from "@/components/ui/ProjectCard";
-import { projects } from "@/lib/data";
+import { useState } from 'react';
+import { projects } from '@/lib/data';
+import { getUniqueTags } from '@/lib/utils';
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
+import ProjectCard from '@/components/ui/ProjectCard';
+import FilterBar from '@/components/ui/FilterBar';
 
-const categories = ["All", "Vision-Language", "Robotics", "ML Research", "Software"];
+const allTags = getUniqueTags(projects);
 
 export default function ProjectsPage() {
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeTag, setActiveTag] = useState<string | null>(null);
 
-  const filtered =
-    activeCategory === "All"
-      ? projects
-      : projects.filter((p) => p.category === activeCategory);
+  const filtered = activeTag
+    ? projects.filter((p) => p.tags.includes(activeTag))
+    : projects;
 
   return (
-    <div className="min-h-screen bg-primary-dark">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h1 className="text-4xl md:text-5xl font-bold gradient-text mb-4">
-          Projects
-        </h1>
-        <p className="text-text-secondary text-lg mb-8">
-          Research and production systems spanning VLA models, robotics, and scalable ML infrastructure.
+    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      <AnimateOnScroll animation="fade-up">
+        <h1 className="mb-4 text-3xl font-bold text-foreground">Projects</h1>
+        <p className="mb-8 text-foreground-secondary">
+          Original projects spanning ML, robotics, systems programming, and more.
         </p>
+      </AnimateOnScroll>
 
-        {/* Filter */}
-        <div className="flex flex-wrap gap-2 mb-10">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                activeCategory === cat
-                  ? "bg-gradient-to-r from-accent-blue to-accent-purple text-white"
-                  : "glass-effect text-text-secondary hover:text-white hover:bg-white/10"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-
-        {filtered.length === 0 && (
-          <p className="text-text-secondary text-center py-12">
-            No projects in this category yet.
-          </p>
-        )}
+      <div className="mb-8">
+        <FilterBar tags={allTags} activeTag={activeTag} onTagClick={setActiveTag} />
       </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {filtered.map((project, i) => (
+          <AnimateOnScroll key={project.slug} animation="fade-up" delay={i * 60}>
+            <ProjectCard project={project} />
+          </AnimateOnScroll>
+        ))}
+      </div>
+
+      {filtered.length === 0 && (
+        <p className="py-12 text-center text-foreground-secondary">
+          No projects match this filter.
+        </p>
+      )}
     </div>
   );
 }
