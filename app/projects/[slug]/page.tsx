@@ -1,28 +1,30 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { ArrowLeft, Lock } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Lock } from 'lucide-react';
 import { projects } from '@/lib/data';
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 import GoogleScholarIcon from '@/components/ui/GoogleScholarIcon';
 
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const project = projects.find((p) => p.slug === params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
   if (!project) return { title: 'Project Not Found' };
   return { title: project.title };
 }
 
-export default function ProjectDetailPage({ params }: Props) {
-  const project = projects.find((p) => p.slug === params.slug);
+export default async function ProjectDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
 
   if (!project) {
     notFound();
@@ -99,16 +101,31 @@ export default function ProjectDetailPage({ params }: Props) {
       )}
 
       <AnimateOnScroll animation="fade-up" delay={500}>
-        {project.githubUrl ? (
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover"
-          >
-            View on GitHub
-            <GoogleScholarIcon size={14} />
-          </a>
+        {project.liveUrl || project.githubUrl ? (
+          <div className="flex flex-wrap gap-3">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover"
+              >
+                Visit site
+                <ExternalLink size={14} />
+              </a>
+            )}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover"
+              >
+                View on GitHub
+                <GoogleScholarIcon size={14} />
+              </a>
+            )}
+          </div>
         ) : project.isPrivate ? (
           <div className="rounded-lg border border-border bg-card-bg p-4">
             <p className="flex items-center gap-2 text-sm text-foreground-secondary">

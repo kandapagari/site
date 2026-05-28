@@ -7,6 +7,7 @@ import SectionPreview from '@/components/ui/SectionPreview';
 import ProjectCard from '@/components/ui/ProjectCard';
 import SkillTag from '@/components/ui/SkillTag';
 import GoogleScholarIcon from '@/components/ui/GoogleScholarIcon';
+import FeaturedBook from '@/components/sections/FeaturedBook';
 
 export default function Home() {
   const featuredProjects = projects.filter((p) => p.featured);
@@ -100,6 +101,9 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* Featured Book */}
+      <FeaturedBook />
 
       {/* Experience Preview */}
       <SectionPreview title="Experience" href="/experience">

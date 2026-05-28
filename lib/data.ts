@@ -8,6 +8,7 @@ export interface Project {
   highlights?: string[];
   tags: string[];
   githubUrl?: string;
+  liveUrl?: string;
   featured: boolean;
   isPrivate?: boolean;
 }
@@ -31,7 +32,7 @@ export interface Publication {
   year: number;
   citations?: number;
   url?: string;
-  type: "paper" | "patent";
+  type: "paper" | "patent" | "book";
 }
 
 export interface Skill {
@@ -209,6 +210,24 @@ export const experiences: Experience[] = [
 // ── Projects ──
 
 export const projects: Project[] = [
+  {
+    slug: "action-models-book",
+    title: "Action Models for Robot Learning",
+    description:
+      "Open-access textbook on action models, vision-language-action systems, and modern robot learning — written and shipped as a static site with math, code highlighting, search, and AI-narrated audio.",
+    longDescription:
+      "A living, open-access textbook that distills the field of action models for robotics — from imitation learning fundamentals to vision-language-action (VLA) architectures. Built with Astro, KaTeX math, Shiki code blocks, Pagefind search, and per-section Kokoro-narrated audio.",
+    highlights: [
+      "End-to-end arc from classical planning (STRIPS, PDDL, inverse kinematics) through deep RL and imitation learning to modern Vision-Language-Action foundation models",
+      "Hands-on Chapter 2 builds a working VLA from scratch using OpenVLA weights and the LIBERO simulator, walked through one line at a time",
+      "Dedicated chapters on the modern building blocks: sequence models for control, world models, and diffusion/flow-matching action heads",
+      "Deep dives on the foundation VLAs that define the field today — RT-1, RT-2, OpenVLA, Octo, π0, Helix, and GR00T N1 — with architecture, training data, and trade-offs",
+      "Practical Part 5 on fine-tuning a VLA for your own robot: dataset collection, LoRA vs. full fine-tuning, sim-to-real, evaluation, safety, and deployment",
+    ],
+    tags: ["Book",  "Robotics", "VLA", "Action Models", "Open Access", "Vision-Language-Action"],
+    liveUrl: "https://action-models-book.vercel.app",
+    featured: true,
+  },
   // ── Featured: Private/proprietary work (write-up only) ──
   {
     slug: "vlm-robotics",
@@ -426,6 +445,15 @@ export const projects: Project[] = [
 // ── Publications ──
 
 export const publications: Publication[] = [
+  {
+    id: "book-action-models",
+    title: "Action Models for Robot Learning",
+    authors: ["P. Kandapagari"],
+    venue: "Open-access online textbook — action-models-book.vercel.app",
+    year: 2026,
+    url: "https://action-models-book.vercel.app",
+    type: "book",
+  },
   {
     id: "pub-tissue",
     title:

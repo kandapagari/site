@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ExternalLink } from 'lucide-react';
 import { publications, socialLinks } from '@/lib/data';
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 import GoogleScholarIcon from '@/components/ui/GoogleScholarIcon';
@@ -49,8 +50,8 @@ export default function PublicationsPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-sm text-accent transition-colors hover:text-accent-hover"
                 >
-                  View on Google Scholar
-                  <GoogleScholarIcon size={13} />
+                  {pub.type === 'book' ? 'Read online' : 'View on Google Scholar'}
+                  {pub.type === 'book' ? <ExternalLink size={13} /> : <GoogleScholarIcon size={13} />}
                 </a>
               )}
             </div>

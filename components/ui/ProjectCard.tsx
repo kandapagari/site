@@ -30,6 +30,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           >
             <ExternalLink size={15} />
           </a>
+        ) : project.liveUrl ? (
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-2 flex-shrink-0 rounded p-1 text-foreground-secondary transition-colors hover:text-accent"
+            aria-label={`Visit ${project.title}`}
+          >
+            <ExternalLink size={15} />
+          </a>
         ) : null}
       </div>
       <p className="mb-4 text-sm leading-relaxed text-foreground-secondary">
