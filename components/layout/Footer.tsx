@@ -34,7 +34,7 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <h4 className="mb-3 text-xs uppercase tracking-wider text-foreground-secondary">
+            <h4 className="mb-3 text-xs tracking-wider text-foreground-secondary">
               <span className="text-accent">$</span> ls ~/
             </h4>
             <div className="space-y-1.5">
@@ -53,7 +53,7 @@ export default function Footer() {
 
           {/* Connect */}
           <div>
-            <h4 className="mb-3 text-xs uppercase tracking-wider text-foreground-secondary">
+            <h4 className="mb-3 text-xs tracking-wider text-foreground-secondary">
               <span className="text-accent">$</span> cat mail.txt
             </h4>
             <p className="space-y-1.5 text-sm text-foreground-secondary">
