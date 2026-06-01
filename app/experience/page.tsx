@@ -9,11 +9,13 @@ export const metadata: Metadata = {
 
 export default function ExperiencePage() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-4xl px-4 py-16 font-mono sm:px-6 lg:px-8">
       <AnimateOnScroll animation="fade-up">
-        <h1 className="mb-4 text-3xl font-bold text-foreground">Experience</h1>
+        <h1 className="mb-2 text-3xl font-bold text-foreground">
+          <span className="text-accent">$</span> git log --author=&quot;pavan&quot;
+        </h1>
         <p className="mb-12 text-foreground-secondary">
-          My professional journey from mechanical engineering to leading foundation models for robotics.
+          <span className="text-accent-2">//</span> My professional journey from mechanical engineering to leading foundation models for robotics.
         </p>
       </AnimateOnScroll>
 

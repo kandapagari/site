@@ -8,12 +8,12 @@ import ThemeToggle from '@/components/ui/ThemeToggle';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { name: 'Experience', href: '/experience' },
-  { name: 'Projects', href: '/projects' },
-  { name: 'Publications', href: '/publications' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'home', href: '/' },
+  { name: 'about', href: '/about' },
+  { name: 'experience', href: '/experience' },
+  { name: 'projects', href: '/projects' },
+  { name: 'publications', href: '/publications' },
+  { name: 'contact', href: '/contact' },
 ];
 
 export default function Navigation() {
@@ -21,32 +21,46 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border bg-nav-bg backdrop-blur-md">
+    <nav className="sticky top-0 z-50 border-b border-border bg-nav-bg font-mono backdrop-blur-md">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link
             href="/"
-            className="text-lg font-semibold text-foreground transition-colors hover:text-accent"
+            className="group flex items-center gap-1.5 text-sm font-bold text-foreground transition-colors hover:text-accent"
+            aria-label="Home"
           >
-            PK
+            <span className="text-foreground-secondary">~/pk</span>
+            <span className="text-accent">$</span>
+            <span className="h-4 w-[0.55ch] animate-caret-blink bg-accent" aria-hidden="true" />
           </Link>
 
           {/* Desktop nav */}
           <div className="hidden items-center gap-1 md:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  'rounded-md px-3 py-2 text-sm transition-colors',
-                  pathname === item.href
-                    ? 'text-accent font-medium'
-                    : 'text-foreground-secondary hover:text-foreground'
-                )}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    'px-2.5 py-2 text-sm transition-colors',
+                    active
+                      ? 'text-accent'
+                      : 'text-foreground-secondary hover:text-foreground'
+                  )}
+                >
+                  {active ? (
+                    <>
+                      <span className="text-accent">[</span>
+                      {item.name}
+                      <span className="text-accent">]</span>
+                    </>
+                  ) : (
+                    item.name
+                  )}
+                </Link>
+              );
+            })}
             <div className="ml-2">
               <ThemeToggle />
             </div>
@@ -56,11 +70,11 @@ export default function Navigation() {
           <div className="flex items-center gap-2 md:hidden">
             <ThemeToggle />
             <button
-              className="rounded-md p-2 text-foreground-secondary hover:text-foreground"
+              className="border border-border p-2 text-foreground-secondary transition-colors hover:border-accent hover:text-accent"
               onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? 'Close menu' : 'Open menu'}
             >
-              {isOpen ? <X size={22} /> : <Menu size={22} />}
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
@@ -68,23 +82,27 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="border-t border-border bg-nav-bg backdrop-blur-md md:hidden">
+        <div className="border-t border-border bg-nav-bg font-mono backdrop-blur-md md:hidden">
           <div className="space-y-1 px-4 py-3">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  'block rounded-md px-3 py-2 text-sm transition-colors',
-                  pathname === item.href
-                    ? 'text-accent font-medium bg-card-bg'
-                    : 'text-foreground-secondary hover:text-foreground hover:bg-card-bg'
-                )}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    'block px-3 py-2 text-sm transition-colors',
+                    active
+                      ? 'bg-card-bg text-accent'
+                      : 'text-foreground-secondary hover:bg-card-bg hover:text-foreground'
+                  )}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="mr-2 text-accent">{active ? '>' : '$'}</span>
+                  {item.name}
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}

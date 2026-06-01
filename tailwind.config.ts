@@ -14,13 +14,27 @@ const config: Config = {
         "foreground-secondary": "var(--foreground-secondary)",
         accent: "var(--accent)",
         "accent-hover": "var(--accent-hover)",
+        "accent-2": "var(--accent-2)",
         border: "var(--border)",
         "card-bg": "var(--card-bg)",
         "card-bg-hover": "var(--card-bg-hover)",
         "nav-bg": "var(--nav-bg)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        display: ["var(--font-display)", "var(--font-mono)", "ui-monospace", "monospace"],
+      },
+      borderRadius: {
+        none: "0",
+        sm: "0",
+        DEFAULT: "0",
+        md: "0",
+        lg: "0",
+        xl: "0",
+        "2xl": "0",
+        "3xl": "0",
+        full: "9999px",
       },
       animation: {
         "fade-up": "fadeUp 0.6s ease-out both",
@@ -29,8 +43,28 @@ const config: Config = {
         "blur-in": "blurIn 0.8s ease-out both",
         "line-draw": "lineDraw 0.8s ease-out both",
         "count-up": "countUp 1s ease-out both",
+        "caret-blink": "caretBlink 1s step-end infinite",
+        "boot-line": "bootLine 0.5s ease-out both",
+        "typing": "typing 1.6s steps(40, end) both",
+        "scanline": "scanline 8s linear infinite",
       },
       keyframes: {
+        caretBlink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
+        bootLine: {
+          "0%": { opacity: "0", transform: "translateY(6px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        typing: {
+          "0%": { width: "0" },
+          "100%": { width: "100%" },
+        },
+        scanline: {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(100%)" },
+        },
         fadeUp: {
           "0%": { opacity: "0", transform: "translateY(24px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },

@@ -2,44 +2,143 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── phosphor (default terminal palette): green-on-near-black ── */
 :root {
-  --background: #ffffff;
-  --foreground: #111827;
-  --foreground-secondary: #4b5563;
-  --accent: #4f46e5;
-  --accent-hover: #4338ca;
-  --border: #e5e7eb;
-  --card-bg: #f9fafb;
-  --card-bg-hover: #f3f4f6;
-  --nav-bg: rgba(255, 255, 255, 0.85);
+  --background: #0a0d0a;
+  --foreground: #c8f5d8;
+  --foreground-secondary: #6f9a7f;
+  --accent: #6ee7a0;
+  --accent-hover: #9af7bd;
+  --accent-2: #f5a623;
+  --border: #1d2a20;
+  --card-bg: #0d120e;
+  --card-bg-hover: #121a14;
+  --nav-bg: rgba(10, 13, 10, 0.85);
+  --selection-bg: #6ee7a0;
+  --selection-fg: #0a0d0a;
+  --grid-color: rgba(110, 231, 160, 0.045);
+  --scanline-color: rgba(0, 0, 0, 0.28);
+  --vignette-color: rgba(0, 0, 0, 0.55);
 }
 
 [data-theme="dark"] {
-  --background: #020617;
-  --foreground: #f1f5f9;
-  --foreground-secondary: #94a3b8;
-  --accent: #818cf8;
-  --accent-hover: #6366f1;
-  --border: #334155;
-  --card-bg: #0f172a;
-  --card-bg-hover: #1e293b;
-  --nav-bg: rgba(2, 6, 23, 0.85);
+  --background: #0a0d0a;
+  --foreground: #c8f5d8;
+  --foreground-secondary: #6f9a7f;
+  --accent: #6ee7a0;
+  --accent-hover: #9af7bd;
+  --accent-2: #f5a623;
+  --border: #1d2a20;
+  --card-bg: #0d120e;
+  --card-bg-hover: #121a14;
+  --nav-bg: rgba(10, 13, 10, 0.85);
+  --selection-bg: #6ee7a0;
+  --selection-fg: #0a0d0a;
+  --grid-color: rgba(110, 231, 160, 0.045);
+  --scanline-color: rgba(0, 0, 0, 0.28);
+  --vignette-color: rgba(0, 0, 0, 0.55);
+}
+
+/* ── paper palette: ink-on-bone with amber accent ── */
+[data-theme="light"] {
+  --background: #f4f1e8;
+  --foreground: #15170f;
+  --foreground-secondary: #595a49;
+  --accent: #92400e;
+  --accent-hover: #7c350c;
+  --accent-2: #1a5c36;
+  --border: #d6d0bd;
+  --card-bg: #ece8da;
+  --card-bg-hover: #e3dece;
+  --nav-bg: rgba(244, 241, 232, 0.85);
+  --selection-bg: #92400e;
+  --selection-fg: #f4f1e8;
+  --grid-color: rgba(21, 23, 15, 0.05);
+  --scanline-color: rgba(21, 23, 15, 0.035);
+  --vignette-color: rgba(120, 105, 70, 0.18);
 }
 
 @layer base {
   html {
     @apply scroll-smooth;
+    scrollbar-color: var(--border) var(--background);
+    scrollbar-width: thin;
   }
   body {
     background-color: var(--background);
     color: var(--foreground);
     transition: background-color 0.3s ease, color 0.3s ease;
   }
+  ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-fg);
+  }
+  /* Thin monospace-style custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border: 2px solid var(--background);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/*
+ * CRT / terminal texture overlay. Sits behind content (z-index below page
+ * content but above the body background), never intercepts pointer events.
+ * Layers: vignette, fine scanlines, and a faint dot/line grid.
+ */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 50% 38%, transparent 48%, var(--vignette-color) 100%),
+    repeating-linear-gradient(
+      0deg,
+      var(--scanline-color),
+      var(--scanline-color) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 3px, 34px 34px, 34px 34px;
+}
+
+/* Slow phosphor sweep across the screen */
+.crt-overlay::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, transparent, var(--scanline-color));
+  opacity: 0.35;
+  animation: crt-sweep 7s linear infinite;
+}
+
+@keyframes crt-sweep {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(200%);
   }
 }
 
@@ -51,6 +150,9 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  .crt-overlay::after {
+    display: none;
   }
 }
 

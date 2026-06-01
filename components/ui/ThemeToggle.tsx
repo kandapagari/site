@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Sun, Moon, Monitor } from "lucide-react";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
@@ -42,29 +41,34 @@ export default function ThemeToggle() {
   };
 
   if (!mounted) {
-    return <div className="w-9 h-9" />;
+    return <div className="h-8 w-[5.5rem]" />;
   }
 
-  let Icon;
   let label;
+  let next;
   if (theme === "light") {
-    Icon = <Sun size={18} className="text-foreground-secondary" />;
-    label = "Switch to dark mode";
+    label = "paper";
+    next = "phosphor";
   } else if (theme === "dark") {
-    Icon = <Moon size={18} className="text-foreground-secondary" />;
-    label = "Switch to system mode";
+    label = "phosphor";
+    next = "auto";
   } else {
-    Icon = <Monitor size={18} className="text-foreground-secondary" />;
-    label = "Switch to light mode";
+    label = "auto";
+    next = "paper";
   }
 
   return (
     <button
       onClick={cycleTheme}
-      className="p-2 rounded-lg transition-colors hover:bg-card-bg-hover"
-      aria-label={label}
+      className="group border border-border px-2.5 py-1.5 font-mono text-xs text-foreground-secondary transition-colors hover:border-accent hover:text-accent"
+      aria-label={`Palette: ${label}. Switch to ${next}.`}
+      title={`Palette: ${label} — click for ${next}`}
     >
-      {Icon}
+      <span className="text-accent">--</span>
+      <span className="mx-1 uppercase tracking-wider text-foreground group-hover:text-accent">
+        {label}
+      </span>
+      <span className="text-accent">--</span>
     </button>
   );
 }

@@ -1,11 +1,22 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { JetBrains_Mono, Space_Mono } from 'next/font/google';
 import './globals.css';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
 import ThemeProvider from '@/components/providers/ThemeProvider';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
+
+const spaceMono = Space_Mono({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-display',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -50,7 +61,7 @@ export default function RootLayout({
                   var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                   var applied = theme === 'dark' || (!theme && dark);
                   document.documentElement.setAttribute('data-theme', applied ? 'dark' : 'light');
-                  document.body.style.backgroundColor = applied ? '#020617' : '#ffffff';
+                  document.body.style.backgroundColor = applied ? '#0a0d0a' : '#f4f1e8';
                 } catch (e) {}
               })();
             `,
@@ -68,7 +79,8 @@ export default function RootLayout({
         <meta name="twitter:image" content="/icon.svg" />
         <meta name="twitter:site" content="@kandapagari" />
       </head>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${jetbrainsMono.variable} ${spaceMono.variable} font-sans antialiased`}>
+        <div className="crt-overlay" aria-hidden="true" />
         <ThemeProvider>
           <Navigation />
           <main className="min-h-screen">{children}</main>
