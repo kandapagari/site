@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, BookOpen } from 'lucide-react';
+import { ArrowRight, BookOpen, Quote } from 'lucide-react';
 import { projects } from '@/lib/data';
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 import TerminalWindow from '@/components/ui/TerminalWindow';
@@ -38,6 +38,15 @@ export default function FeaturedBook() {
                 >
                   ./read-the-book
                   <ArrowRight size={16} />
+                </a>
+                <a
+                  href={`${book.liveUrl.replace(/\/$/, '')}/cite/`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent"
+                >
+                  ./cite
+                  <Quote size={16} />
                 </a>
                 <Link
                   href={`/projects/${book.slug}`}
