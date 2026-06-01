@@ -24,10 +24,7 @@ export const metadata: Metadata = {
     template: '%s | Pavan Kumar Kandapagari',
   },
   description:
-    'Team Lead for Foundation Models at Agile Robots SE. Specializing in Vision-Language-Action models, imitation learning, and distributed training for intelligent robotic agents.',
-  icons: {
-    icon: '/icon.svg',
-  },
+      'Team Lead for Foundation Models at Agile Robots SE. Specializing in Vision-Language-Action models, imitation learning, and distributed training for intelligent robotic agents.',
   openGraph: {
     title: 'Pavan Kumar Kandapagari',
     description:
